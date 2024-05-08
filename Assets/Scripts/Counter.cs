@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]
 public class Counter : MonoBehaviour
 {
     public event Action<int> ValueChanged;
 
-    [SerializeField] private int _value;
+    private int _value;
     private float _delay = 0.5f;
     private Coroutine _coroutine;
     private bool _isRunning;
@@ -31,10 +32,10 @@ public class Counter : MonoBehaviour
 
         while (_isRunning)
         {
+            yield return wait;
+
             _value++;
             ValueChanged?.Invoke(_value);
-            
-            yield return wait;
         }
     }
 }
